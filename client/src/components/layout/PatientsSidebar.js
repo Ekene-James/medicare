@@ -80,7 +80,7 @@ function PatientsSidebar({clicked}) {
     return (
         <div>
               <ListItem className={classes.logo} >
-                <img src='./img/logo.png'  alt='logo'/>
+                Company Logo
             </ListItem>
            
             <List>

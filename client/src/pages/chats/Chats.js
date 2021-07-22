@@ -1,13 +1,13 @@
 import React from 'react'
-
+import Typography from '@material-ui/core/Typography';
 import { ChatContext } from '../../store/chats/ChatStore';
-import { clearChat, newChat,updateMsg, getConversations } from '../../store/actions/ChatActions';
-import { AuthContext } from '../../store/auth/AuthStore';
+import {  getConversations } from '../../store/actions/ChatActions';
+
 
 
 function Chats() {
-    const socket = React.useRef();
-    const {state,dispatch} = React.useContext(AuthContext);
+
+   
     const chatCtx = React.useContext(ChatContext);
   
 
@@ -18,7 +18,9 @@ function Chats() {
 
     return (
         <div>
-            chats Home
+            <Typography variant="h6" gutterBottom>
+                Hi, Welcome to Chat center, Please select a user to chat with from the panel on the left.
+            </Typography>
         </div>
     )
 }

@@ -72,7 +72,7 @@ export const getDoctors = async(dispatch) => {
     
 }
 export const createEncounter = async(datas,dispatch) => {
-    dispatch(btnLoading(true))
+    dispatch(isLoading(true))
     try {
         const data = await axios.post("/api/v1/encounter",datas)
        
@@ -87,6 +87,27 @@ export const createEncounter = async(datas,dispatch) => {
     } catch (error) {
         console.log(error)
         dispatch(isLoading(false))
+        alert('error, please try again later')
+    }
+
+    
+}
+export const sendEncounterTo = async(datas,dispatch) => {
+    dispatch(btnLoading(true))
+    try {
+        const data = await axios.post("/api/v1/encounter/send",datas)
+       
+        dispatch(btnLoading(false))
+        alert('success, encounter sent')
+        // dispatch({
+        //     type : 'CREATE_ENCOUNTER',
+        //     payload:data.data
+        //    }) 
+        console.log(data)
+        
+    } catch (error) {
+        console.log(error)
+        dispatch(btnLoading(false))
         alert('error, please try again later')
     }
 

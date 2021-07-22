@@ -17,7 +17,7 @@ router
   .post(createEncounter)
 
 router
-  .route("/encounter/send")
+  .route("/send")
   .post(sendEncounter)
   
 module.exports = router;

@@ -18,12 +18,12 @@ exports.getEncounters = asyncHandler(async (req, res, next) => {
 //route     post /api/v1/encounter
 //access    private
 exports.createEncounter = asyncHandler(async (req, res, next) => {
-  req.body.doctor = req.user.id;
+  req.body.createdBy = req.user.id;
   
 
   const encounter = await Encounter.create(req.body);
   // update the doctor model with an encounter Id
- const doctor = await Doctor.findByIdAndUpdate(req.user.id, {encounters: encounter._id}, {
+ const doctor = await Doctor.findByIdAndUpdate(req.user.id, {$push : {encounters: encounter._id}}, {
     new: true,
     runValidators: true
   });
@@ -36,12 +36,14 @@ exports.createEncounter = asyncHandler(async (req, res, next) => {
 //route     post /api/v1/encounter/send
 //access    private
 exports.sendEncounter = asyncHandler(async (req, res, next) => {
-  req.body.doctor = req.user.id;
+  req.body.createdBy = req.user.id;
   
 // first create the encounter
   const encounter = await Encounter.create(req.body);
+
+ 
   // update the receiving doctor model with an encounter Id
- const doctor = await Doctor.findByIdAndUpdate(req.body.receivingId, {receivedEncounters: encounter._id}, {
+ const doctor = await Doctor.findByIdAndUpdate(req.body.sendTo, {$push : {receivedEncounters: encounter._id}}, {
     new: true,
     runValidators: true
   });

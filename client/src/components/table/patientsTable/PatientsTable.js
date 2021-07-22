@@ -72,26 +72,25 @@ function PatientsTable({data}) {
         </TableHead>
         <TableBody>
         <TableRow >
-          {
-            data.length === 0 ? <TableCell align="center">No Search Result</TableCell> : ''
-          }
-
         </TableRow>
-          {data?.map((row,i) => (
-            <TableRow key={i}>
-              <TableCell component="th" scope="row">
-                {i + 1}
-              </TableCell>
-              <TableCell align="center"><img className={classes.img} src={row.image} alt='profileImg'/></TableCell>
-              <TableCell align="center">{`${row.name}  ${row.surname}`}</TableCell>
-              <TableCell align="center">{row.age}</TableCell>
-              <TableCell align="center">{row.gender}</TableCell>
-              <TableCell align="center">{row.bmi}</TableCell>
-              <TableCell align="center">{row.state}</TableCell>
-              <TableCell align="center"><Link to={`/encounter/${row._id}`}> <IconButton color="primary" component="span"><ArrowForwardIosIcon/></IconButton></Link></TableCell>
-  
-            </TableRow>
-          ))}
+        {
+            data.length === 0 ? 'No Search Result' : data?.map((row,i) => (
+              <TableRow key={i}>
+                <TableCell component="th" scope="row">
+                  {i + 1}
+                </TableCell>
+                <TableCell align="center"><img className={classes.img} src={row.image} alt='profileImg'/></TableCell>
+                <TableCell align="center">{`${row.name}  ${row.surname}`}</TableCell>
+                <TableCell align="center">{row.age}</TableCell>
+                <TableCell align="center">{row.gender}</TableCell>
+                <TableCell align="center">{row.bmi}</TableCell>
+                <TableCell align="center">{row.state}</TableCell>
+                <TableCell align="center"><Link to={`/encounter/${row._id}`}> <IconButton color="primary" component="span"><ArrowForwardIosIcon/></IconButton></Link></TableCell>
+    
+              </TableRow>
+            ))
+          }
+          {}
         </TableBody>
       </Table>
       <TablePagination

@@ -56,7 +56,7 @@ const EncounterSchema = new mongoose.Schema(
       required: [true, "Please add Treatment Plan"]
     },
    
-    doctor: {
+    createdBy: {
       type: mongoose.Schema.ObjectId,
       ref: "Doctor",
       required: true

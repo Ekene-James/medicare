@@ -7,7 +7,7 @@ import { ChatContext } from '../../store/chats/ChatStore';
 import Typography from '@material-ui/core/Typography';
 
 
-import { clearChat, getMsgs,updateMsg,postConversation,postMsgs ,setCurrentConversation} from '../../store/actions/ChatActions';
+import {  getMsgs,postConversation,postMsgs ,setCurrentConversation} from '../../store/actions/ChatActions';
 import Messages from './Messages'
 
 const useStyles = makeStyles((theme) => ({
