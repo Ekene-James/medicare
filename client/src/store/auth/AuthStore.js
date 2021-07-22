@@ -6,7 +6,11 @@ export const AuthContext = createContext();
 
 export default function AuthContextProvider (props){
  const initialState ={
-     authenticated : false
+     isAuthenticated : false,
+     user: {},
+     loading:false,
+     chatWindow:false,
+     chattingWith:{}
  };
  const [state, dispatch] = React.useReducer(AuthReducer, initialState);
 

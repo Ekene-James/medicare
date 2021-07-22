@@ -3,14 +3,20 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import SupportContextProvider from './store/support/SupportStore'
+import DoctorContextProvider from './store/doctor/DoctorStore'
+import PatientContextProvider from './store/patient/PatientStore'
 import AuthContextProvider from './store/auth/AuthStore'
+import ChatContextProvider from './store/chats/ChatStore'
 
 ReactDOM.render(
   <AuthContextProvider>
-  <SupportContextProvider>
+  <DoctorContextProvider>
+  <PatientContextProvider>
+  <ChatContextProvider>
     <App />
-  </SupportContextProvider>
+  </ChatContextProvider>
+  </PatientContextProvider>
+  </DoctorContextProvider>
   </AuthContextProvider>,
   document.getElementById('root')
 );

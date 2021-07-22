@@ -9,7 +9,8 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "socket": "npm start --prefix socket",
+    "dev": "concurrently \"npm run server\" \"npm run socket\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "",
@@ -18,6 +19,7 @@
     "nodemon": "^2.0.2"
   },
   "dependencies": {
+    "base64-img": "^1.0.4",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "cookie-parser": "^1.4.4",
@@ -36,6 +38,7 @@
     "node-geocoder": "^3.25.0",
     "nodemailer": "^6.4.4",
     "slugify": "^1.3.6",
+    "socket.io": "^4.1.3",
     "xss-clean": "^0.1.1"
   }
 }

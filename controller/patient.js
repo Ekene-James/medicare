@@ -1,5 +1,5 @@
 const Patient = require("../models/Patient");
-
+const base64Img = require('base64-img');
 const asyncHandler = require("../middleware/asyncMiddleware");
 
 //get token from model, sign and send token via response and cookie
@@ -24,7 +24,7 @@ const sendTokenResponse = (user, statusCode, res) => {
   };
 
   // desc     get all patients
-//route     post /api/v1/patient
+//route     get /api/v1/patient
 //access    private
 exports.getPatients = asyncHandler(async (req, res, next) => {
   res.status(200).json(res.advancedResults);
@@ -61,39 +61,19 @@ exports.login = asyncHandler(async (req, res, next) => {
 
 exports.register = asyncHandler(async (req, res, next) => {
   req.body.createdBy = req.user.id;
- 
-  const file = req.body.image;
-  if (!file) {
-    return next(new ErrorResponse(`Please select a photo to upload`, 404));
-  }
-  
-
-  if (!file.mimetype.startsWith("image")) {
-    return next(new ErrorResponse(`Please upload only a photo file`, 404));
-  }
-  if (file.size > process.env.FILE_MAX) {
-    return next(
-      new ErrorResponse(
-        `Please you cant upload photo of more than 1mb size`,
-        404
-      )
-    );
-  }
-
-  file.name = `photo_${req.user.id}${path.parse(file.name).ext}`;
-
-  file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async err => {
-    if (err) {
-      console.log(err);
-      return next(
-        new ErrorResponse(`Problem uploading file, please try again later`, 500)
-      );
-    }
-  req.body.image = file.name
-});
+ // if you want to store image in the file system
+//   const image = req.body.image;
+//   const name = `patient_${req.user.id}_${new Date().getTime()}`;
+//   //upload image
+//  base64Img.img(image, process.env.FILE_UPLOAD_PATH, name,async function(err, filepath) {
+//    req.body.image = filepath
+   
+//   });
   const user = await Patient.create(req.body);
 
   res.status(201).json({ success: true, data: user });
+
+  
 }); 
 
 

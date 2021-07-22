@@ -62,7 +62,7 @@ function NestedList({name,handleSelected, select, icon, collapseItems}) {
 
   const handleClick = () => {
     setOpen(!open);
-    handleSelected(name)
+
   };
 
   return (
@@ -83,8 +83,8 @@ function NestedList({name,handleSelected, select, icon, collapseItems}) {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
           {
-              collapseItems.map(
-            (item,i) =>  <Link  key={i} className={classes.link}  to={`/${name}/${item}`}>
+              collapseItems?.map(
+            (item,i) =>  <Link  key={i} className={classes.link}  to={item.link}>
               <List component="div" disablePadding>
                 <ListItem    onClick={() => handleSelected(item.name)} selected={item.name === select} button className={classes.nested}>
                   <ListItemIcon>

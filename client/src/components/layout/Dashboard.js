@@ -11,6 +11,8 @@ import SidebarItems from './SidebarItems';
 import TopBar from './TopBar';
 import { AuthContext } from '../../store/auth/AuthStore';
 import PatientsSidebar from './PatientsSidebar';
+import DoctorsChatbar from './DoctorsChatbar';
+import PatientsChatbar from './PatientsChatbar';
 const drawerWidth = 240;
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -90,7 +92,13 @@ function Dashboard(props) {
               keepMounted: true, // Better open performance on mobile.
             }}
           >
-            {state?.role === 'doctor' ? (<SidebarItems clicked={handleDrawerToggle}/>) : (<PatientsSidebar clicked={handleDrawerToggle}/>)}
+            {
+              state?.user?.role === 'doctor' ? (
+                state.chatWindow ? <DoctorsChatbar clicked={handleDrawerToggle}/> : <SidebarItems clicked={handleDrawerToggle}/>
+                )  : (
+                    state.chatWindow ? <PatientsChatbar clicked={handleDrawerToggle}/> : <PatientsSidebar clicked={handleDrawerToggle}/> 
+                        )
+            }
             
           </Drawer>
         </Hidden>
@@ -102,7 +110,13 @@ function Dashboard(props) {
             variant="permanent"
             open
           >
-             {state?.role === 'doctor' ? (<SidebarItems/>) : (<PatientsSidebar />)}
+            {
+              state?.user?.role === 'doctor' ? (
+                state.chatWindow ? <DoctorsChatbar/> : <SidebarItems/>
+                )  : (
+                    state.chatWindow ? <PatientsChatbar/> : <PatientsSidebar/> 
+                        )
+            }
           </Drawer>
         </Hidden>
       </nav>
@@ -111,7 +125,9 @@ function Dashboard(props) {
         {children}
       </main>
     </div>
+    <div style={{display : `${state.chatWindow ? 'none' : 'block'}`}}>
         <Footer/>
+    </div>
     </div>
   );
 }

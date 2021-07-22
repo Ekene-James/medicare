@@ -2,6 +2,9 @@ import React,{useState} from 'react';
 import Modal from '../../components/Modal/index'
 import { makeStyles,Paper , Button,TextField, Grid, Typography,MenuItem  } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { DoctorContext } from '../../store/doctor/DoctorStore';
+import { createEncounter, getDoctors } from '../../store/actions/DoctorActions';
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -31,9 +34,17 @@ const useStyles = makeStyles((theme) => ({
 
 function Encounter() {
     const classes = useStyles();
-    const [state, setstate] = useState({})
+    const [state, setstate] = useState({
+        visits: '',
+        diagnosis: ''
+    })
     const [open,setOpen] = useState(false);
    
+    const doctorCtx = React.useContext(DoctorContext);
+    React.useEffect(() => {
+        if(doctorCtx?.state?.doctors?.success) setOpen(true);
+      }, [doctorCtx?.state?.doctors?.success,doctorCtx.state.btnLoading])
+
  
 
  const calcBmi = Number(state?.weight) / Number(state?.height)
@@ -45,10 +56,11 @@ function Encounter() {
           bmi:calcBmi,
          
       }
-    //  console.log(data)
+      doctorCtx.dispatch(createEncounter(data,doctorCtx.dispatch)) 
   }
-  const onactionHandler = (params) => {
-    setOpen(true);
+  const onactionHandler = () => {
+    doctorCtx.dispatch(getDoctors(doctorCtx.dispatch))
+   
        
 }
   
@@ -63,6 +75,7 @@ function Encounter() {
     const sendTo = () => {
 
     }
+
    
 const modalContent = <div className={classes.encounter}>
                         <TextField
@@ -76,20 +89,10 @@ const modalContent = <div className={classes.encounter}>
                             value={state.sendTo || ''}
                             
                             >
-                                {[
-                                    {
-                                    label:'Dr charles',
-                                    value:'firstTime'
-                                },
-                                    {
-                                    label:'Dr Joe',
-                                    value:'repeat'
-                                },
-                                
-                                ]
-                                .map((option,i) => (
-                                    <MenuItem key={i} value={option.value}>
-                                    {option.label}
+                                {
+                                 doctorCtx?.state?.doctors?.data?.map((option,i) => (
+                                    <MenuItem key={i} value={option._id}>
+                                    {`${option.cadre} ${option.name} ${option.surname}`}
                                     </MenuItem>
                                 ))}
                         </TextField>
@@ -125,14 +128,17 @@ const modalContent = <div className={classes.encounter}>
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <TextField
-                        name='time'
-                        fullWidth
-                        required
-                        onChange={handleChange}
-                        label='Time'
-                        variant="outlined"
-                        type='text'
+                <TextField
+                    fullWidth
+                    label="Time"
+                    name="time"
+                    onChange={handleChange}
+                    required
+                    variant="outlined"
+                    type='time'
+                    InputLabelProps={{
+                        shrink: true,
+                        }}
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -236,7 +242,7 @@ const modalContent = <div className={classes.encounter}>
                         {[
                             {
                             label:'Hypertension',
-                            value:' hypertension'
+                            value:'hypertension'
                         },
                             {
                             label:'Pneumonia',
@@ -303,10 +309,10 @@ const modalContent = <div className={classes.encounter}>
                  >
                 
               
-                <Button variant="contained" type='submit' color="primary" >
+                <Button variant="contained" type='submit' color="primary" disabled={doctorCtx.state.loading} >
                     Save
                 </Button>
-                <Button endIcon={<ArrowForwardIosIcon />} variant="contained" type='button' onClick={onactionHandler} color="primary" >
+                <Button endIcon={<ArrowForwardIosIcon />} variant="contained" type='button' onClick={onactionHandler} color="primary" disabled={doctorCtx.state.btnLoading} >
                     Send To
                 </Button>
                 </Grid>

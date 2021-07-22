@@ -39,8 +39,8 @@ const DoctorSchema = new mongoose.Schema({
     minlength: 6,
     select: false
   },
-  encounters: [{ type: Schema.Types.ObjectId, ref: 'Encounter' }],
-  receivedEncounters: [{ type: Schema.Types.ObjectId, ref: 'Encounter' }],
+  encounters: [{ type: mongoose.Schema.ObjectId, ref: 'Encounter' }],
+  receivedEncounters: [{ type: mongoose.Schema.ObjectId, ref: 'Encounter' }],
   createdAt: {
     type: Date,
     default: Date.now

@@ -1,6 +1,9 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import {Link,useHistory} from 'react-router-dom'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { makeStyles,Paper , Button,TextField, Grid, Typography,MenuItem  } from '@material-ui/core';
+import { AuthContext } from '../../store/auth/AuthStore';
+import { registerDoc } from '../../store/actions/AuthActions';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -49,13 +52,18 @@ const useStyles = makeStyles((theme) => ({
 
 function SignUp() {
     const classes = useStyles();
- 
+    const history = useHistory()
+    const authCtx = React.useContext(AuthContext);
     const [state, setstate] = React.useState({})
    
   const submit = e => {
-      e.preventDefault();
+    e.preventDefault();
+    const data ={
+        ...state,
+        password:'123456'
+    }
     
-    //  console.log(data)
+    authCtx.dispatch(registerDoc(data,history,authCtx.dispatch))
      
 
   }
@@ -178,12 +186,12 @@ function SignUp() {
                     alignItems="center"
                     >
                     <Link className={classes.link} to='/login'>
-                    <Button  variant="contained" type='button' color="default" >
+                    <Button startIcon={<ArrowBackIosIcon />} variant="contained" type='button' color="default" >
                         Login
                     </Button>
 
                     </Link>
-                    <Button variant="contained" type='submit' color="primary" >
+                    <Button variant="contained" type='submit' color="primary" disabled={authCtx.state.loading} >
                         Sign Up
                     </Button>
 

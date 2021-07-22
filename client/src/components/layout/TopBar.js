@@ -150,7 +150,7 @@ function TopBar({handleDrawerToggle}) {
           </IconButton>
           <div>
           <Typography style={{fontWeight : 'bold'}} variant="subtitle1" noWrap>
-            {capitalize}
+            {state.chatWindow ? 'Chats' : capitalize}
           </Typography>
           <small className={classes.date}>
             Today, 20th october 2020

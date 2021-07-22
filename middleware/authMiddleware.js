@@ -4,8 +4,9 @@ const ErrorResponse = require("../utils/errorResponse");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("./asyncMiddleware");
 
-exports.protect = (model) => asyncHandler(async (req, res, next) => {
+exports.protect = () => asyncHandler(async (req, res, next) => {
   let token;
+  
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
@@ -19,11 +20,14 @@ exports.protect = (model) => asyncHandler(async (req, res, next) => {
 
 try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      if(model === 'doctor'){
+      if(req.headers.role === 'doctor'){
+        
         req.user = await Doctor.findById(decoded.id);
         
       }else{
+       
         req.user = await Patient.findById(decoded.id);
+       
 
       }
     next();

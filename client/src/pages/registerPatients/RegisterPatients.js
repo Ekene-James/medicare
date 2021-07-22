@@ -3,6 +3,8 @@ import { makeStyles,Paper , Button,TextField, Grid, Typography,MenuItem  } from 
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import Webcam from "react-webcam";
+import {DoctorContext} from '../../store/doctor/DoctorStore';
+import { registerPatient } from '../../store/actions/DoctorActions';
 const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(3),
@@ -23,10 +25,13 @@ const useStyles = makeStyles((theme) => ({
 
 function RegisterPatients() {
     const classes = useStyles();
+    const doctorCtx = React.useContext(DoctorContext);
     const webcamRef = React.useRef(null);
     const [state, setstate] = React.useState({})
     const [image,setImage]=React.useState('');
     const [start,setStart]=React.useState(false);
+
+    //device camera to use
     const videoConstraints = {
         facingMode: "user"
       };
@@ -35,9 +40,7 @@ function RegisterPatients() {
           
               const imageSrc = webcamRef.current.getScreenshot();
               setImage(imageSrc)
-              setStart(false)
-         
-         
+              setStart(false) 
       },
       [webcamRef]
     );
@@ -48,10 +51,16 @@ function RegisterPatients() {
       const data={
           ...state,
           bmi:calcBmi,
-          image
+          image,
+          password:'123456'
       }
-    //  console.log(data)
+      if(image){
+          doctorCtx.dispatch(registerPatient(data,doctorCtx.dispatch))
      
+          setImage('')
+      }else{
+          alert('please snap an image')
+      }
 
   }
   
@@ -75,7 +84,7 @@ function RegisterPatients() {
               <Typography variant="h4"  gutterBottom>
                        Register Patients
               </Typography>
-          
+         
             <Paper className={classes.paper}>
             <form onSubmit={submit}>
             <Grid container spacing={3}>
@@ -119,6 +128,7 @@ function RegisterPatients() {
                     name="gender"
                     select
                     fullWidth
+                    required
                     label="Gender"
                     onChange={handleChange}
                     helperText="Gender"
@@ -250,7 +260,7 @@ function RegisterPatients() {
                   )
               }
               
-                <Button variant="contained" type='submit' color="primary" >
+                <Button variant="contained" type='submit' color="primary" disabled={doctorCtx.state.loading}>
                     Submit
                 </Button>
                 </Grid>

@@ -54,18 +54,26 @@ function Login() {
     const classes = useStyles();
     const authCtx = useContext(AuthContext);
     const [state, setstate] = React.useState({
-        email:'guest@gmail.com',
+        name:'',
         password : '123456',
     })
   
   const onLogin = e => {
       e.preventDefault();
-      authCtx.dispatch(login('patient'))
-
+  
+      if(state.name){
+        authCtx.dispatch(login('patient',state,authCtx.dispatch))
+    }else{
+        alert('please put a name')
+    }
   }
   const onDoctor = e => {
       e.preventDefault();
-      authCtx.dispatch(login('doctor'))
+      if(state.name){
+          authCtx.dispatch(login('doctor',state,authCtx.dispatch))
+      }else{
+          alert('please put a name')
+      }
 
   }
   
@@ -82,11 +90,11 @@ function Login() {
             <Paper className={classes.paper}>
                 <div className={classes.txtField}>
                 <TextField
-                    name='email'
+                    name='name'
                     fullWidth
-                    value={state.email}
+                    value={state.name}
                     onChange={handleChange}
-                    label='Email'
+                    label='Name'
                     variant="outlined"
                     type='text'
                     className={classes.form}
@@ -101,12 +109,13 @@ function Login() {
                     variant="outlined"
                     type='password'
                 />
-                <Button fullWidth variant="contained" color="primary" onClick={onLogin}>
-                    Login
+                 <Button fullWidth variant="contained" color="primary" style={{marginBottom:'10px'}} onClick={onDoctor} disabled={authCtx.state.loading}>
+                    Doctor Login
                 </Button>
-                <Button fullWidth variant="contained" color="primary" onClick={onDoctor}>
-                    doctor
+                <Button fullWidth variant="contained" color="secondary" onClick={onLogin} disabled={authCtx.state.loading}>
+                   Patient Login
                 </Button>
+               
                 </div>
                 <div className={classes.signUp}><h5>A Doctor?</h5>  <Link  to='/signup'>SignUp</Link></div>
                 <Link className={classes.link} to='#'>Forgot Password?</Link>

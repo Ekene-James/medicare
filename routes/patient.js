@@ -1,5 +1,6 @@
 const express = require("express");
 const Patient = require("../models/Patient");
+const advancedResults = require('../middleware/advancedResultMiddleware')
 const router = express.Router();
 const {
  
@@ -13,11 +14,11 @@ const {
 const { protect, authorize } = require("../middleware/authMiddleware");
 
 
-router.get("/",protect('doctor'), authorize("doctor", "admin"),advancedResults(Patient), getPatients);
-router.post("/register",protect('doctor'), authorize("doctor", "admin"), register);
+router.get("/",protect(), authorize("doctor", "admin"),advancedResults(Patient), getPatients);
+router.post("/register",protect(), authorize("doctor", "admin"), register);
 router.post("/login", login);
 router.get("/logout", logout);
 
-router.get("/me", protect('patient'), authorize("patient", "admin"), getMe);
+router.get("/me", protect(), authorize("patient", "admin"), getMe);
   
 module.exports = router;

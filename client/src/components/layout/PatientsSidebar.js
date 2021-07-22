@@ -1,7 +1,7 @@
 import React, { useState,useContext, useEffect } from 'react'
 import {Link,useHistory} from 'react-router-dom'
 import { AuthContext } from '../../store/auth/AuthStore';
-import { logout,getRoute } from '../../store/actions/AuthActions';
+import { logout,getRoute, toggleChatWindow } from '../../store/actions/AuthActions';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ChatIcon from '@material-ui/icons/Chat';
 
@@ -67,11 +67,7 @@ function PatientsSidebar({clicked}) {
             
         },
       
-        {
-            name : 'Chats',
-            icon : <ChatIcon className={classes.icon} />,
-            link : '/patient-chats'
-        }
+      
      
     ]
    
@@ -108,7 +104,14 @@ function PatientsSidebar({clicked}) {
                 <h5>General</h5>
             </ListItem>
             <List>
-           
+            <ListItem 
+                    onClick={() => dispatch(toggleChatWindow(true))} 
+                    className={classes.listItem} 
+                    button 
+                    >
+                        <ListItemIcon ><ChatIcon className={classes.icon} /></ListItemIcon>
+                        <ListItemText classes={{secondary:classes.listItemText}} secondary='Chat' />
+                    </ListItem>
                   <ListItem 
                         onClick={() => dispatch(logout())} 
                         className={classes.listItem} 

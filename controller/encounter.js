@@ -17,7 +17,7 @@ exports.getEncounters = asyncHandler(async (req, res, next) => {
 // desc     post encounter
 //route     post /api/v1/encounter
 //access    private
-exports.postEncounter = asyncHandler(async (req, res, next) => {
+exports.createEncounter = asyncHandler(async (req, res, next) => {
   req.body.doctor = req.user.id;
   
 

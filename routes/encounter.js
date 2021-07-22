@@ -1,5 +1,6 @@
 const express = require("express");
 const Encounter = require("../models/Encounter");
+const advancedResults = require('../middleware/advancedResultMiddleware')
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ router.use(authorize("doctor"));
 
 
 router
-  .route("/encounter")
+  .route("/")
   .get(advancedResults(Encounter),getEncounters)
   .post(createEncounter)
 
