@@ -15,7 +15,7 @@ const btnLoading = (state) => {
 export const registerPatient = async(data,dispatch) => {
     dispatch(isLoading(true))
     try {
-        const user = await axios.post("https://medikcare.netlify.app/api/v1/patient/register",data)
+        const user = await axios.post("/api/v1/patient/register",data)
        
         dispatch(isLoading(false))
         console.log(user)
@@ -32,7 +32,7 @@ export const getPatients = async(dispatch,qs) => {
     dispatch(isLoading(true))
     try {
         let query
-        qs ? query=`https://medikcare.netlify.app/api/v1/patient?${qs}` : query = `https://medikcare.netlify.app/api/v1/patient`;
+        qs ? query=`/api/v1/patient?${qs}` : query = `/api/v1/patient`;
        
         const data = await axios.get(query)
        
@@ -54,7 +54,7 @@ export const getPatients = async(dispatch,qs) => {
 export const getDoctors = async(dispatch) => {
     dispatch(btnLoading(true))
     try {
-        const data = await axios.get("https://medikcare.netlify.app/api/v1/doctor")
+        const data = await axios.get("/api/v1/doctor")
        
         dispatch(btnLoading(false))
         dispatch({
@@ -74,7 +74,7 @@ export const getDoctors = async(dispatch) => {
 export const createEncounter = async(datas,dispatch) => {
     dispatch(isLoading(true))
     try {
-        const data = await axios.post("https://medikcare.netlify.app/api/v1/encounter",datas)
+        const data = await axios.post("/api/v1/encounter",datas)
        
         dispatch(isLoading(false))
         alert('success, encounter created')
@@ -95,7 +95,7 @@ export const createEncounter = async(datas,dispatch) => {
 export const sendEncounterTo = async(datas,dispatch) => {
     dispatch(btnLoading(true))
     try {
-        const data = await axios.post("https://medikcare.netlify.app/api/v1/encounter/send",datas)
+        const data = await axios.post("/api/v1/encounter/send",datas)
        
         dispatch(btnLoading(false))
         alert('success, encounter sent')
