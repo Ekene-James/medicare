@@ -28,7 +28,7 @@ function Footer() {
              <Grid item  xs={12} >
                 <Paper className={classes.paper}>
                     <div>
-                        &#169; 2021 Admin Demo App
+                        &#169; 2021 Medicare Demo App
                     </div>
                     <div>
                         <Link className={classes.link} to='#'>Terms</Link>

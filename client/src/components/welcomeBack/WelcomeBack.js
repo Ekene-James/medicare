@@ -22,7 +22,11 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-start',
         alignItems : 'flex-start',
         flexDirection : 'column',
-        width:'68%'
+        width:'60%',
+        [theme.breakpoints.down('sm')]: {
+            width:'90%', 
+          
+         },
     
  },
     btn: {

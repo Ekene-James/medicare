@@ -30,10 +30,13 @@ function RegisterPatients() {
     const [state, setstate] = React.useState({})
     const [image,setImage]=React.useState('');
     const [start,setStart]=React.useState(false);
+    const frontCamera ='user';
+    const backCamera ='environment';
+    const [cameraType,setCameraType]=React.useState(backCamera);
 
     //device camera to use
     const videoConstraints = {
-        facingMode: "user"
+        facingMode: cameraType
       };
     const capture = React.useCallback(
       () => {
@@ -75,6 +78,10 @@ function RegisterPatients() {
       const startCam = () => {
         setStart(true)
          setImage('')
+        
+    }
+      const handleSwitch = () => {
+        setCameraType(prevState => prevState === frontCamera ? backCamera : frontCamera)
         
     }
 
@@ -227,14 +234,19 @@ function RegisterPatients() {
                 <div >
                     {
                         start ? (
-                            <Webcam
-                            audio={false}
-                            height={250}
-                            ref={webcamRef}
-                            screenshotFormat="image/jpeg"
-                            width={250}
-                            videoConstraints={videoConstraints}
-                            />
+                            <div>
+                                <Webcam
+                                audio={false}
+                                height={250}
+                                ref={webcamRef}
+                                screenshotFormat="image/jpeg"
+                                width={250}
+                                videoConstraints={videoConstraints}
+                                />
+                                 <Button variant="contained" type='button' color="primary" onClick={handleSwitch}>
+                                    Switch Camera
+                                </Button>
+                            </div>
                         ) : ''
                         
                     }

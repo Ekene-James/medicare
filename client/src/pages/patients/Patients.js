@@ -15,7 +15,8 @@ const useStyles = makeStyles( theme => ({
     alignItems:'center',
     width:'100%',
     [theme.breakpoints.down("sm")]: {
-      flexDirection : 'column'
+      flexDirection : 'column',
+      width:'50%',
     }
 
   },
@@ -23,7 +24,12 @@ const useStyles = makeStyles( theme => ({
     display: 'flex',
     justifyContent:'space-between',
     alignItems:'center',
-    width:'40%'
+    width:'50%',
+    [theme.breakpoints.down("sm")]: {
+      
+      width:'100%',
+      
+    }
    
     
 
@@ -87,7 +93,7 @@ function Patients() {
                   onChange={handleChange}
                   helperText="Filter by Gender"
                   variant="outlined"
-                  style={{marginRight:'15px'}}
+                  style={{marginRight:'10px'}}
                 >
                   {[
                     {
@@ -117,6 +123,7 @@ function Patients() {
                   onChange={handleChange}
                   helperText="Filter by Age"
                   variant="outlined"
+                  style={{marginRight:'10px'}}
                 >
                   {[
                     {
@@ -147,7 +154,7 @@ function Patients() {
                   type='text'
                   helperText="Filter by BMI"
                 />
-                <IconButton onClick={filter} color="primary" component="span"><FilterListIcon/></IconButton>
+                <IconButton style={{marginBottom:'25px'}} onClick={filter} color="primary" component="span"><FilterListIcon/></IconButton>
               </div>
               </div>
       
