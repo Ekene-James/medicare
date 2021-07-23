@@ -1,6 +1,7 @@
 import axios from 'axios'
 import setAuthToken from './utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
+
 export const setCurrentUser = user => {
     return {
          type: 'LOGIN',
@@ -24,7 +25,7 @@ export const login =async (roles,state,dispatch) => {
     let user
     try {
         if(roles === 'doctor'){
-            user = await axios.post("/api/v1/doctor/login",state)
+            user = await axios.post("https://medikcare.netlify.app/api/v1/doctor/login",state)
         }else{
             user = await axios.post("/api/v1/patient/login",state)
 
@@ -91,7 +92,7 @@ return {
 export const registerDoc = async(data,history,dispatch) => {
     dispatch(isLoading(true))
     try {
-        const user = await axios.post("/api/v1/doctor/register",data)
+        const user = await axios.post("https://medikcare.netlify.app/api/v1/doctor/register",data)
         if(user.status === 200) history.push('/login')
         dispatch(isLoading(false))
         

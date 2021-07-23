@@ -11,7 +11,7 @@ export const getPatient = async(dispatch) => {
     
     try {
        
-        const data = await axios.get(`/api/v1/patient/me`)
+        const data = await axios.get(`https://medikcare.netlify.app/api/v1/patient/me`)
        
         dispatch(isLoading(false))
         dispatch({

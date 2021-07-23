@@ -26,7 +26,7 @@ export const clearChat = () => {
   export const getConversations = async(dispatch) => {
    // dispatch(isLoading(true))
     try {
-        const data = await axios.get(`/api/v1/conversation`)
+        const data = await axios.get(`https://medikcare.netlify.app/api/v1/conversation`)
        
         dispatch(isLoading(false))
    
@@ -44,7 +44,7 @@ export const clearChat = () => {
   export const getMsgs = async(conversationId,dispatch) => {
     dispatch(isLoading(true))
     try {
-        const data = await axios.get(`/api/v1/message/${conversationId}`)
+        const data = await axios.get(`https://medikcare.netlify.app/api/v1/message/${conversationId}`)
        
         dispatch(isLoading(false))
        
@@ -63,7 +63,7 @@ export const clearChat = () => {
   export const postMsgs = async(msg) => {
  
     try {
-        const data = await axios.post(`/api/v1/message`,msg)
+        const data = await axios.post(`https://medikcare.netlify.app/api/v1/message`,msg)
         console.log(data)
         
     } catch (error) {
@@ -97,7 +97,7 @@ export const clearChat = () => {
   export const postConversation = async(receiverId,dispatch) => {
    // dispatch(isLoading(true))
     try {
-        const data = await axios.post(`/api/v1/conversation/${receiverId}`)
+        const data = await axios.post(`https://medikcare.netlify.app/api/v1/conversation/${receiverId}`)
        
         dispatch(isLoading(false))
         console.log(data)
